@@ -10,6 +10,7 @@ __author__ = 'andrey'
 
 """ Helper functions for gbgb project
 """
+import numpy as np
 
 
 def lcm(a, b, c):
@@ -32,3 +33,29 @@ def lcm(a, b, c):
     if a * b * c == 0:
         raise ValueError("lcm: arguments must be non-zero!")
     return abs(lcm2(a, lcm2(b, c)))
+
+
+def supercell(basis, a, b, c):
+    cell = np.concatenate([crd[..., np.newaxis] for crd in np.mgrid[0:a, 0:b, 0:c]], axis=3)
+    cell = cell.reshape(-1, 3)
+    cell = basis[:, np.newaxis] + cell[np.newaxis, ...]
+    return cell.reshape(-1, 3)
+
+
+def bcc(a, b, c):
+    basis = np.array([[0., 0., 0.],
+                      [0.5, 0.5, 0.5]])
+    return supercell(basis, a, b, c)
+
+
+def fcc(a, b, c):
+    basis = np.array([[0., 0., 0.],
+                      [0.5, 0.5, 0.],
+                      [0.5, 0., 0.5],
+                      [0., 0.5, 0.5]])
+    return supercell(basis, a, b, c)
+
+
+def pc(a, b, c):
+    basis = np.array([[0., 0., 0.]])
+    return supercell(basis, a, b, c)
