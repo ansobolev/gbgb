@@ -6,17 +6,12 @@
 # See http://github.com/ansobolev/gbgb for details
 #
 # ---------------------------------------------
-__author__ = 'andrey'
 
 """ Visualization with Enthought Mayavi package
 """
 
 import numpy as np
-try:
-    from enthought.mayavi import mlab
-except ImportError:
-    from mayavi import mlab
-
+from mayavi import mlab
 
 class Visual(object):
     """
@@ -32,10 +27,6 @@ class Visual(object):
 
     def get_sources(self):
         return self._sources.iteritems()
-
-    @staticmethod
-    def show():
-        mlab.show()
 
 
 class AtomsVisual(Visual):
@@ -59,3 +50,6 @@ class VectorVisual(Visual):
         vectors = np.hstack((np.zeros_like(crd), crd))
         self._sources["v_" + name] = mlab.quiver3d(*vectors.T)
 
+
+def show():
+    mlab.show()
