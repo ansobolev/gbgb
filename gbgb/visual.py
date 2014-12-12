@@ -13,6 +13,7 @@
 import numpy as np
 from mayavi import mlab
 
+
 class Visual(object):
     """
     Generic class for visualizers
@@ -47,8 +48,8 @@ class VectorVisual(Visual):
 
     def __init__(self, name, crd):
         super(VectorVisual, self).__init__()
-        vectors = np.hstack((np.zeros_like(crd), crd))
-        self._sources["v_" + name] = mlab.quiver3d(*vectors.T)
+        vectors = np.vstack((crd, crd[0]))
+        self._sources["v_" + name] = mlab.plot3d(*vectors.T)
 
 
 def show():
